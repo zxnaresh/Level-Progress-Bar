@@ -1,0 +1,10 @@
+<resources>
+    <declare-styleable name="LevelProgressBar">
+        <attr name="mileStone" format="integer" />
+        <attr name="singleColor" format="boolean" />
+        <attr name="firstColor" format="color|reference" />
+        <attr name="secondColor" format="color|reference" />
+        <attr name="barThickness" format="float" />
+        <attr name="backgroundColor" format="color|reference" />
+    </declare-styleable>
+</resources>
