@@ -10,11 +10,14 @@ package at.com.levelprogressbar;
  *
  * @author Ankit Polekar.
  */
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
@@ -31,6 +34,7 @@ public class LevelProgressBar extends ProgressBar {
     private Paint whitePaint;
     private Paint grayPaint;
     private boolean isSingleColor;
+    private int nBackGroundColor;
 
     public LevelProgressBar(Context context) {
         super(context);
@@ -81,13 +85,13 @@ public class LevelProgressBar extends ProgressBar {
 
 
         ColorDrawable colorDrawable = (ColorDrawable) this.getBackground();
-        int nBackGroundColor = colorDrawable.getColor();
+        nBackGroundColor = colorDrawable != null ? colorDrawable.getColor() : Color.WHITE;
 
-        whitePaint.setColor(nBackGroundColor);
         grayPaint.setColor(Color.GRAY);
         whitePaint.setStrokeWidth(barThickness);
         grayPaint.setStrokeWidth(barThickness);
 
+        setProgressDrawable(null);
 
         a.recycle();
     }
@@ -96,6 +100,13 @@ public class LevelProgressBar extends ProgressBar {
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+
+        whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        whitePaint.setColor(Color.TRANSPARENT);
+        whitePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+        whitePaint.setAntiAlias(true);
+
 
         int halfHeight = getHeight() / 2;
         int progressEndX = (int) (getWidth() * getProgress() / 100f);
@@ -119,7 +130,7 @@ public class LevelProgressBar extends ProgressBar {
         paint.setColor(color);
 
         //BACK GROUND OF PROGRESS BAR
-        canvas.drawLine(0, halfHeight, progressStop, halfHeight, grayPaint);
+        canvas.drawLine(0, halfHeight, firstStop, halfHeight, grayPaint);
 
         //HERE DRAW FIRST SECTION OF PROGRESS BAR
         if (progress > nSlot)
@@ -132,6 +143,7 @@ public class LevelProgressBar extends ProgressBar {
         canvas.drawLine(firstStop, halfHeight, firstStop + 10, halfHeight, whitePaint);
 
         //DRAW SECOND SECTION OF PROGRESS BAR
+        canvas.drawLine(firstStop + 10, halfHeight, secondStop, halfHeight, grayPaint);
         if (progress < (nSlot * 2) && progress > nSlot)
             canvas.drawLine(firstStop + 10, halfHeight, progressEndX, halfHeight, paint);
         else if (progress > nSlot) {
@@ -142,6 +154,7 @@ public class LevelProgressBar extends ProgressBar {
         canvas.drawLine(secondStop, halfHeight, secondStop + 10, halfHeight, whitePaint);
 
         //DRAW THIRD SECTION OF PROGRESS BAR
+        canvas.drawLine(secondStop + 10, halfHeight, thirdStop, halfHeight, grayPaint);
         if (progress < (nSlot * 3) && (progress > (nSlot * 2)))
             canvas.drawLine(secondStop + 10, halfHeight, progressEndX, halfHeight, paint);
         else if (progress > nSlot * 3)
@@ -151,11 +164,12 @@ public class LevelProgressBar extends ProgressBar {
         canvas.drawLine(thirdStop, halfHeight, thirdStop + 10, halfHeight, whitePaint);
 
         //DRAW FOURTH SECTION OF PROGRESS BAR
+        canvas.drawLine(thirdStop + 10, halfHeight, progressStop, halfHeight, grayPaint);
         if (progress > (nSlot * 3))
             canvas.drawLine(thirdStop + 10, halfHeight, progressStop, halfHeight, paint);
 
         //
-        canvas.drawLine(progressStop, halfHeight, getWidth(), halfHeight, whitePaint);
+//        canvas.drawLine(progressStop, halfHeight, getWidth(), halfHeight, whitePaint);
 
 
     }
