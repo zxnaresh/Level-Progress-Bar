@@ -169,7 +169,6 @@ public class LevelProgressBar extends ProgressBar {
 
     }
 
-
     public void setMileStone(int mileStone) {
         this.mileStone = mileStone;
     }
