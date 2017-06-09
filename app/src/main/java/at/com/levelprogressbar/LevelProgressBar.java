@@ -33,6 +33,7 @@ public class LevelProgressBar extends ProgressBar {
     private Paint grayPaint;
     private boolean isSingleColor;
     private int nBackGroundColor;
+    private int nHorizontalSpace;
 
     public LevelProgressBar(Context context) {
         super(context);
@@ -77,6 +78,8 @@ public class LevelProgressBar extends ProgressBar {
         nFirstColor = a.getColor(R.styleable.LevelProgressBar_firstColor, Color.GREEN);
         isSingleColor = a.getBoolean(R.styleable.LevelProgressBar_singleColor, false);
         mileStone = a.getInt(R.styleable.LevelProgressBar_mileStone, getMax());
+        nHorizontalSpace = a.getInt(R.styleable.LevelProgressBar_horizontalSpace, 10);
+
         paint = new Paint();
         whitePaint = new Paint();
         grayPaint = new Paint();
@@ -90,6 +93,7 @@ public class LevelProgressBar extends ProgressBar {
         grayPaint.setStrokeWidth(barThickness);
 
         setProgressDrawable(null);
+
         a.recycle();
     }
 
@@ -104,17 +108,20 @@ public class LevelProgressBar extends ProgressBar {
 //        whitePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
         whitePaint.setAntiAlias(true);
 
-
         int halfHeight = getHeight() / 2;
         int progressEndX = (int) (getWidth() * getProgress() / 100f);
+//        int progressStop = (int) ((getWidth() * getMax()) / 100f);
         int progressStop = (int) ((getWidth() * getMax()) / 100f);
 
         nSlot = getMax() / 4;
 
         int firstStop = (int) ((getWidth() * nSlot) / 100f);
-        int secondStop = (int) ((getWidth() * (nSlot * 2)) / 100f);
-        int thirdStop = (int) ((getWidth() * (nSlot * 3)) / 100f);
-        int lastStop = (int) ((getWidth() * (nSlot * 4)) / 100f);
+//        int secondStop = (int) ((getWidth() * (nSlot * 2)) / 100f);
+        int secondStop = firstStop * 2;
+//        int thirdStop = (int) ((getWidth() * (nSlot * 3)) / 100f);
+        int thirdStop = firstStop * 3;
+//        int lastStop = (int) ((getWidth() * (nSlot * 4)) / 100f);
+        int lastStop = firstStop * 4;
 
         progress = getProgress();
         // draw the filled portion of the bar
@@ -127,46 +134,37 @@ public class LevelProgressBar extends ProgressBar {
         paint.setColor(color);
 
         //BACK GROUND OF PROGRESS BAR
-        canvas.drawLine(0, halfHeight, firstStop, halfHeight, grayPaint);
+        canvas.drawLine(nHorizontalSpace, halfHeight, firstStop, halfHeight, grayPaint);
 
         //HERE DRAW FIRST SECTION OF PROGRESS BAR
         if (progress > nSlot)
-            canvas.drawLine(0, halfHeight, firstStop, halfHeight, paint);
+            canvas.drawLine(nHorizontalSpace, halfHeight, firstStop, halfHeight, paint);
         else {
-            canvas.drawLine(0, halfHeight, progressEndX, halfHeight, paint);
+            canvas.drawLine(nHorizontalSpace, halfHeight, progressEndX, halfHeight, paint);
         }
 
-        //DIVIDER BETWEEN TWO SECTION
-        canvas.drawLine(firstStop, halfHeight, firstStop + 10, halfHeight, whitePaint);
 
         //DRAW SECOND SECTION OF PROGRESS BAR
-        canvas.drawLine(firstStop + 10, halfHeight, secondStop, halfHeight, grayPaint);
+        canvas.drawLine(firstStop + nHorizontalSpace, halfHeight, secondStop, halfHeight, grayPaint);
         if (progress < (nSlot * 2) && progress > nSlot)
-            canvas.drawLine(firstStop + 10, halfHeight, progressEndX, halfHeight, paint);
+            canvas.drawLine(firstStop + nHorizontalSpace, halfHeight, progressEndX, halfHeight, paint);
         else if (progress > nSlot) {
-            canvas.drawLine(firstStop + 10, halfHeight, secondStop, halfHeight, paint);
+            canvas.drawLine(firstStop + nHorizontalSpace, halfHeight, secondStop, halfHeight, paint);
         }
 
-        //DIVIDER BETWEEN TWO SECTION
-        canvas.drawLine(secondStop, halfHeight, secondStop + 10, halfHeight, whitePaint);
 
         //DRAW THIRD SECTION OF PROGRESS BAR
-        canvas.drawLine(secondStop + 10, halfHeight, thirdStop, halfHeight, grayPaint);
+        canvas.drawLine(secondStop + nHorizontalSpace, halfHeight, thirdStop, halfHeight, grayPaint);
         if (progress < (nSlot * 3) && (progress > (nSlot * 2)))
-            canvas.drawLine(secondStop + 10, halfHeight, progressEndX, halfHeight, paint);
+            canvas.drawLine(secondStop + nHorizontalSpace, halfHeight, progressEndX, halfHeight, paint);
         else if (progress > nSlot * 3)
-            canvas.drawLine(secondStop + 10, halfHeight, thirdStop, halfHeight, paint);
+            canvas.drawLine(secondStop + nHorizontalSpace, halfHeight, thirdStop, halfHeight, paint);
 
-        //DIVIDER BETWEEN TWO SECTION
-        canvas.drawLine(thirdStop, halfHeight, thirdStop + 10, halfHeight, whitePaint);
 
         //DRAW FOURTH SECTION OF PROGRESS BAR
-        canvas.drawLine(thirdStop + 10, halfHeight, progressStop, halfHeight, grayPaint);
+        canvas.drawLine(thirdStop + nHorizontalSpace, halfHeight, lastStop, halfHeight, grayPaint);
         if (progress > (nSlot * 3))
-            canvas.drawLine(thirdStop + 10, halfHeight, progressStop, halfHeight, paint);
-
-        //
-//        canvas.drawLine(progressStop, halfHeight, getWidth(), halfHeight, whitePaint);
+            canvas.drawLine(thirdStop + nHorizontalSpace, halfHeight, progressStop, halfHeight, paint);
 
 
     }
@@ -174,5 +172,9 @@ public class LevelProgressBar extends ProgressBar {
 
     public void setMileStone(int mileStone) {
         this.mileStone = mileStone;
+    }
+
+    public void setnHorizontalSpace(int nHorizontalSpace) {
+        this.nHorizontalSpace = nHorizontalSpace;
     }
 }

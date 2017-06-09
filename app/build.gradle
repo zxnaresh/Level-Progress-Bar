@@ -21,15 +21,3 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
 }
-task deleteJar(type: Delete) {
-    delete 'libs/levelProgress.jar'
-}
-
-task createJar(type: Copy) {
-    from('build/intermediates/bundles/default/')
-    into('libs/jars/')
-    include('classes.jar')
-    rename('classes.jar', 'levelProgress.jar')
-}
-
-createJar.dependsOn(deleteJar, build)
