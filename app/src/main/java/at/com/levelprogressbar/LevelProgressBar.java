@@ -16,8 +16,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
@@ -92,7 +90,6 @@ public class LevelProgressBar extends ProgressBar {
         grayPaint.setStrokeWidth(barThickness);
 
         setProgressDrawable(null);
-
         a.recycle();
     }
 
@@ -104,7 +101,7 @@ public class LevelProgressBar extends ProgressBar {
 
         whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         whitePaint.setColor(Color.TRANSPARENT);
-        whitePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+//        whitePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
         whitePaint.setAntiAlias(true);
 
 
