@@ -78,7 +78,7 @@ public class LevelProgressBar extends ProgressBar {
         nFirstColor = a.getColor(R.styleable.LevelProgressBar_firstColor, Color.GREEN);
         isSingleColor = a.getBoolean(R.styleable.LevelProgressBar_singleColor, false);
         mileStone = a.getInt(R.styleable.LevelProgressBar_mileStone, getMax());
-        nHorizontalSpace = a.getInt(R.styleable.LevelProgressBar_horizontalSpace, 10);
+        nHorizontalSpace = a.getInt(R.styleable.LevelProgressBar_horizontalSpace, 2);
 
         paint = new Paint();
         whitePaint = new Paint();

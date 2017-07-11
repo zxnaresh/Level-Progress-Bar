@@ -12,8 +12,19 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        LeveleProgressBar {
+            debuggable false
+            renderscriptDebuggable true
+            minifyEnabled true
+            pseudoLocalesEnabled true
+            proguardFile 'E:/Projects/Andorid Demo/LevelProgressbar/app/proguard-rules.pro'
+            versionNameSuffix '1.1'
+            zipAlignEnabled true
+        }
+        buildType {
         }
     }
 }
