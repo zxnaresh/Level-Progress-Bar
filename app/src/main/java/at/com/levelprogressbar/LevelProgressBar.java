@@ -10,7 +10,7 @@ package at.com.levelprogressbar;
  *
  * @author Ankit Polekar.
  */
-
+ 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
